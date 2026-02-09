@@ -20,7 +20,7 @@ public final class PlayerPointsHookAddon implements XPrisonAddon, Listener {
         api = XPrisonAPI.getInstance();
 
         if (!Bukkit.getPluginManager().isPluginEnabled("PlayerPoints")) {
-            Bukkit.getLogger().warning("PlayerPoints plugin not found! No PlayerPoints currencies will be supported.");
+            Bukkit.getLogger().warning("PlayerPoints plugin not found! No PlayerPoints currency will be supported.");
             onDisable();
             return;
         }
