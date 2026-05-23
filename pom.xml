@@ -6,7 +6,7 @@
 
     <groupId>dev.drawethree.xprison</groupId>
     <artifactId>XPrisonPlayerPointsHook</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>XPrisonPlayerPointsHook</name>
@@ -42,6 +42,7 @@
                             <X-Prison-Addon-Description>${description}</X-Prison-Addon-Description>
                             <X-Prison-Addon-Version>${version}</X-Prison-Addon-Version>
                             <X-Prison-Addon-Author>${author}</X-Prison-Addon-Author>
+                            <X-Prison-Min-Version>2026.2.2.2</X-Prison-Min-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -88,7 +89,7 @@
         <dependency>
             <groupId>dev.drawethree.xprison</groupId>
             <artifactId>X-PrisonAPI</artifactId>
-            <version>1.5-SNAPSHOT</version>
+            <version>1.6-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

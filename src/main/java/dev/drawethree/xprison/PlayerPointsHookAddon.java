@@ -2,43 +2,39 @@ package dev.drawethree.xprison;
 
 import dev.drawethree.xprison.api.XPrisonAPI;
 import dev.drawethree.xprison.api.addons.XPrisonAddon;
+import dev.drawethree.xprison.api.addons.XPrisonAddonContext;
 import dev.drawethree.xprison.currency.PlayerPointsCurrency;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
 
-public final class PlayerPointsHookAddon implements XPrisonAddon, Listener {
+import java.util.logging.Logger;
 
-    private static PlayerPointsHookAddon instance;
+public final class PlayerPointsHookAddon implements XPrisonAddon {
+
     private XPrisonAPI api;
-	private PlayerPointsCurrency currency;
+    private Logger logger;
+    private PlayerPointsCurrency currency;
 
     @Override
-    public void onEnable() {
-        instance = this;
-        api = XPrisonAPI.getInstance();
+    public void onEnable(XPrisonAddonContext context) {
+        this.api = context.getAPI();
+        this.logger = context.getLogger();
 
         if (!Bukkit.getPluginManager().isPluginEnabled("PlayerPoints")) {
-            Bukkit.getLogger().warning("PlayerPoints plugin not found! No PlayerPoints currency will be supported.");
-            onDisable();
+            logger.warning("PlayerPoints plugin not found! No PlayerPoints currency will be supported.");
             return;
         }
 
-		PlayerPointsAPI ppAPI = PlayerPoints.getInstance().getAPI();
-		currency = new PlayerPointsCurrency(ppAPI);
-
-		api.getCurrencyApi().registerCurrency(currency);
-
+        PlayerPointsAPI ppAPI = PlayerPoints.getInstance().getAPI();
+        currency = new PlayerPointsCurrency(ppAPI);
+        api.getCurrencyApi().registerCurrency(currency);
     }
-
 
     @Override
     public void onDisable() {
-		api.getCurrencyApi().unregisterCurrency(currency);
-    }
-
-    public XPrisonAPI getApi() {
-        return api;
+        if (currency != null) {
+            api.getCurrencyApi().unregisterCurrency(currency);
+        }
     }
 }
