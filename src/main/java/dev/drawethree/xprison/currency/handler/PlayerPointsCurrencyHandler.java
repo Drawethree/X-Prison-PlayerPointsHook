@@ -21,9 +21,7 @@ public final class PlayerPointsCurrencyHandler implements XPrisonCurrencyHandler
 
     @Override
     public boolean setBalance(OfflinePlayer offlinePlayer, double v) {
-		api.take(offlinePlayer.getUniqueId(), (int) getBalance(offlinePlayer));
-		api.give(offlinePlayer.getUniqueId(), (int) v);
-		return true;
+        return api.set(offlinePlayer.getUniqueId(), (int) v);
     }
 
     @Override

@@ -5,6 +5,7 @@ import dev.drawethree.xprison.api.currency.model.XPrisonCurrencyHandler;
 import dev.drawethree.xprison.currency.handler.PlayerPointsCurrencyHandler;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
+import org.black_ixx.playerpoints.config.SettingKey;
 import org.black_ixx.playerpoints.manager.LocaleManager;
 import org.black_ixx.playerpoints.util.PointsUtils;
 
@@ -23,7 +24,7 @@ public final class PlayerPointsCurrency implements XPrisonCurrency {
 
     @Override
     public double getMaxAmount() {
-        return Long.MAX_VALUE;
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -42,8 +43,31 @@ public final class PlayerPointsCurrency implements XPrisonCurrency {
     }
 
     @Override
+    public double getStartingAmount() {
+        return SettingKey.STARTING_BALANCE.get();
+    }
+
+    @Override
+    public String getFormatPattern() {
+        return "#.##";
+    }
+
+    @Override
+    public boolean isShortFormat() {
+        return false;
+    }
+
+    @Override
+    public boolean isTrimZeros() {
+        return false;
+    }
+
+    @Override
     public String format(double v) {
-		return PointsUtils.formatPoints((int)v) + " " + (v == (double)1.0F ? this.currencyNameSingular() : this.currencyNamePlural());
+        String formatted = isShortFormat()
+                ? PointsUtils.formatPointsShorthand((long) v)
+                : PointsUtils.formatPoints((long) v);
+        return formatted + " " + (v == 1.0 ? this.currencyNameSingular() : this.currencyNamePlural());
     }
 
     @Override
